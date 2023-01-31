@@ -1,0 +1,49 @@
+<h1>Hot Vs Cold Observables</h1>
+
+<h3><b style="color: blue;">Cold</b> Observable</h3>
+<ol>
+  <li>Share one instance</li>
+  <li>Should subscribe to return data</li>
+  <li>Data coming from observable</li>
+</ol>
+
+<h3><b style="color: red;">Hot</b> Observable</h3>
+<ol>
+  <li>
+    Share more than one instance
+    <br>
+    Share instance for all subscribers
+    <br>
+    ex: subject
+  </li>
+  <li>Subject share same data to all subscribers</li>
+  <li>Shouldn't subscribe to return data</li>
+</ol>
+
+<h3><b style="color: rgb(255, 102, 0);">Warm</b> Observable</h3>
+
+<ol>
+  <li>
+    Between the two
+  </li>
+  <li>From <b style="color: blue;">cold</b>:
+    should do subscribe</li>
+  <li>From <b style="color: red;">hot</b>:
+    Return multicast data</li>
+</ol>
+
+<h3>?* Some Notes</h3>
+<ol>
+  <li>
+    publish() & connect() & ConnectableObservable
+    <br>
+    transform the <b style="color: blue;">Cold</b>
+    to <b style="color: rgb(255, 102, 0);">Warm</b>
+  </li>
+  <li>refCount() do connect</li>
+  <li>
+    share() == publish() + refCount()
+    <br>
+    Make Observable Multicast
+  </li>
+</ol>
