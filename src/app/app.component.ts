@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { defer, interval, of, Observable,
+import {
+  defer, interval, of, Observable,
   fromEvent, EMPTY, timer,
   range, generate, iif,
   merge, concat, Subject,
@@ -12,7 +13,8 @@ import { defer, interval, of, Observable,
   Timestamp,
   ConnectableObservable,
   combineLatest,
-  forkJoin} from 'rxjs';
+  forkJoin
+} from 'rxjs';
 import {
   map, take, tap,
   switchMapTo, pluck, mapTo,
@@ -33,7 +35,7 @@ import {
   materialize, dematerialize,
   timeInterval, timeout, timeoutWith, timestamp,
   toArray, defaultIfEmpty, isEmpty, every, find, findIndex,
-  combineAll, concatAll, mergeAll, withLatestFrom, publish, refCount, publishLast, publishReplay, shareReplay, publishBehavior
+  combineAll, concatAll, mergeAll, withLatestFrom, publish, refCount, publishLast, publishReplay, shareReplay, publishBehavior, switchMap, concatMap
 
 } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
@@ -48,15 +50,40 @@ export class AppComponent implements OnInit {
   title = 'rx-train';
   // writer: any;
   ngOnInit(): void {
-    of(
-      { age: 4, name: 'Foo1' },
-      { age: 7, name: 'Bar' },
-      { age: 5, name: 'Foo2' },
-      { age: 6, name: 'Foo3' }
-    ).pipe(
-      distinctUntilKeyChanged('name', (x, y) => x.substring(0, 3) === y.substring(0, 3))
-    )
-    .subscribe(x => console.log(x));
+    /* const letters$ = of('a', 'b', 'c');
+    const numbers$ = of(1, 2, 3);
+    letters$.pipe(
+      mergeMap(letter => {
+        return numbers$.pipe(
+          map(numberEl => letter + numberEl)
+        )
+      })
+    ).subscribe(console.log) */
+    /* const letters$ = of('a', 'b', 'c');
+    const numbers$ = of(1, 2, 3);
+    letters$.pipe(
+      switchMap(letter => {
+        return numbers$.pipe(
+          map(numberEl => letter + numberEl)
+        )
+      })
+    ).subscribe(console.log) */
+    /* const click = fromEvent(document, 'click');
+    click.pipe(
+      switchMap(() => {
+        return interval(1000);
+      })
+    ).subscribe((x) => {console.log(x)}) */
+    const clicks = fromEvent(document, 'click');
+    const result = clicks.pipe(
+      exhaustMap(ev => interval(1000).pipe(take(4)))
+    );
+    result.subscribe(x => console.log(x));
+    /* const clicks = fromEvent(document, 'click');
+    const result = clicks.pipe(
+      exhaustMap(() => interval(1000).pipe(take(5)))
+    );
+    result.subscribe(x => console.log(x)); */
   }
 }
 
